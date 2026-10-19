@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Who Am I?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Who Am I?</h1>
+    <p class="lede">Everyone gets a secret character from the same category. You see everybody's character except your own. Ask yes/no questions to figure out who you are.</p>
+  </header>
+
+  <section class="panel" id="setup">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-host" aria-selected="true">Host a game</button>
+      <button class="tab" role="tab" id="tab-join" aria-selected="false">Join with a code</button>
+    </div>
+
+    <div id="host-pane" class="field" style="gap:14px">
+      <p class="hint">One person fills this in and pastes the game code in Discord. Character and category are picked randomly, so the host doesn't know theirs either.</p>
+      <div class="names">
+        <div class="field"><label for="n1">Player 1</label><input id="n1" placeholder="e.g. Ivan" maxlength="20"></div>
+        <div class="field"><label for="n2">Player 2</label><input id="n2" placeholder="e.g. Sam" maxlength="20"></div>
+        <div class="field"><label for="n3">Player 3 (optional)</label><input id="n3" maxlength="20"></div>
+        <div class="field"><label for="n4">Player 4 (optional)</label><input id="n4" maxlength="20"></div>
+      </div>
+      <div class="field"><label for="catpick">Category</label>
+        <select id="catpick"></select>
+      </div>
+      <div class="field" id="custom-wrap" hidden style="gap:10px">
+        <div class="field"><label for="cust-name">Custom category name</label><input id="cust-name" maxlength="60" placeholder="e.g. Characters with a pet"></div>
+        <div class="field"><label for="cust-list">Characters, one per line</label><textarea id="cust-list" rows="6" style="font-family:var(--body);font-size:15px" placeholder="Ash Ketchum&#10;Shaggy&#10;Wallace&#10;Jon Arbuckle"></textarea></div>
+        <p class="hint">Add at least as many characters as players. More is better, so rounds don't repeat. This list goes inside the game code, so friends don't need to type anything.</p>
+      </div>
+      <div class="row"><button class="primary" id="make">Create game code</button></div>
+      <p class="err" id="host-err" hidden></p>
+      <div class="field" id="code-out" hidden>
+        <label for="code-text">Game code — paste this in Discord</label>
+        <div class="codebox"><textarea id="code-text" readonly rows="3"></textarea><button id="copy">Copy</button></div>
+        <p class="hint">Then everyone (you too) opens this page, goes to <b>Join with a code</b>, pastes it, and picks their own name.</p>
+      </div>
+    </div>
+
+    <div id="join-pane" class="field" style="gap:14px" hidden>
+      <div class="field"><label for="code-in">Game code</label><textarea id="code-in" rows="3" placeholder="Paste the code from Discord"></textarea></div>
+      <div class="field" id="me-wrap" hidden><label for="me">Which one are you?</label><select id="me"></select></div>
+      <p class="err" id="join-err" hidden></p>
+      <div class="row"><button class="primary" id="join" disabled>Sit down</button></div>
+    </div>
+  </section>
+
+  <section class="panel" id="table" hidden>
+    <div class="row" style="justify-content:space-between">
+      <div class="cat"><small>Category</small><strong id="cat-name"></strong></div>
+      <span class="round" id="round-label"></span>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="row" style="justify-content:space-between">
+      <div class="confirm" id="reveal-box">
+        <button class="ghost" id="reveal">Reveal mine</button>
+      </div>
+      <div class="row">
+        <button class="ghost" id="leave">Change code</button>
+        <button class="primary" id="next">Next round</button>
+      </div>
+    </div>
+    <p class="hint">Next round: everyone presses it at the same time. Same code, new category and characters. Check the round number matches.</p>
+  </section>
+</div>
+
+
+<script src="categories.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
